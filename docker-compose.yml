@@ -1,0 +1,21 @@
+php:
+  # image: limogin/php-7-2-8-apache
+  # build: .
+  # restart: always
+  container_name: php72
+  build: . 
+  ports:
+    - "8080:80"
+  volumes:
+    - "./app:/var/www/html/:rw"
+  # - "./backup:/backup/:rw"
+  # links:
+  #  - mysql
+  environment:
+    DOCKERENV: dev 
+    SITE:      limogin.com
+    SITE1:     limogin.com
+    
+
+
+

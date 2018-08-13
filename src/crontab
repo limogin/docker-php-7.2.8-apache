@@ -1,0 +1,3 @@
+# Sample background tasks
+# 0 23 * * 7 /usr/bin/php /var/www/html/SERVERNAME/tasks/backup.php
+# 10 * * * * /usr/bin/php /var/www/html/SERVERNAME/tasks/goaccess.php

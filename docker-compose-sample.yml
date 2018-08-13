@@ -1,0 +1,49 @@
+php:
+  image: limogin/php-7-2-8-apache
+  container_name: web-container 
+  restart: always
+  ports:
+    - "8080:80"
+  volumes:
+    - "./app:/var/www/html/:rw"
+    - "./backup:/backup/:rw"
+  links:
+    - mysql
+  environment:
+    DOCKERENV: dev 
+    SITE:      mydomain.com
+    SITE1:     mydomain.com
+    SITE2:     myanotherdomain.com
+
+mysql:
+  image: mysql:latest
+  container_name: mysql-container
+  restart: always
+  volumes:
+    - "./data:/var/lib/mysql"
+    - "./mysql/mysql.conf.d:/etc/mysql/mysql.conf.d"
+  environment:
+    MYSQL_ROOT_PASSWORD: [root-password]
+    MYSQL_DATABASE: [database-name]
+    MYSQL_USER: [database-user-name]
+    MYSQL_PASSWORD: [database-password]
+
+vsftpd:
+   container_name: ftp-container
+   image: panubo/vsftpd
+   restart: always
+   ports:
+     - "21:21"
+     - "4559-4564:4559-4564"
+   volumes:
+     - ./app/mydomain.com:/srv/mydomain.com
+     - ./app/myanotherdomain.com:/srv/myanotherdomain.com
+     - ./src/certs/vsftpd.pem:/etc/ssl/certs/vsftpd.crt:ro
+     - ./src/certs/vsftpd.pem:/etc/ssl/private/vsftpd.key:ro
+   environment:
+     FTP_USERS_ROOT: 'local_root=/srv/$USER'
+     FTP_USER_1: 'mydomain.com:pass'          # pass is the result of: mkpasswd -m sha-512 (in debian whois package) 
+     FTP_USER_2: 'myanotherdomain.com:pass'   
+   command: vsftpd /etc/vsftpd_ssl.conf    
+
+   
