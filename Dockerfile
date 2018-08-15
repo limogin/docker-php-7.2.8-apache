@@ -11,8 +11,12 @@ RUN apt-get update && \
     libmemcached-dev memcached libmemcached-tools wget curl libapache2-mod-evasive libapache2-mod-security2 && \
     a2enmod headers && a2enmod evasive && a2enmod rewrite && a2enmod ssl
 
-# NCURSES extensions
-RUN apt-get install -y libncurses5 libncurses5-dev libncursesw5 libncursesw5-dev geoip-bin libgeoip-dev libgeoip1 geoip-database geoip-database-extra
+# Some extensions
+RUN apt-get install -y libncurses5 libncurses5-dev libncursesw5 libncursesw5-dev geoip-bin libgeoip-dev libgeoip1 \
+    geoip-database geoip-database-extra libxslt1-dev libxslt1.1 libxml2-dev libxml2 libtidy-dev libtidy5 tidy  \
+    sqlite3 libsqlite3-0 libsqlite3-dev sqlite libpspell-dev pdf2htmlex \
+    ssl-cert openssl libcurl3 libssl-dev
+    
 
 # ImageMagick
 RUN apt-get install -y imagemagick libmagickwand-dev libmagickwand-dev libmagickcore-dev libpam-pwdfile
@@ -29,7 +33,15 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install bcmath
 # RUN docker-php-ext-install mcrypt
+RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install bz2 calendar ctype dba dom exif fileinfo 
+RUN docker-php-ext-install ftp gettext hash iconv json 
+RUN docker-php-ext-install opcache pcntl pdo pdo_mysql pdo_sqlite 
+RUN docker-php-ext-install posix pspell session 
+RUN docker-php-ext-install shmop simplexml soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx 
+RUN docker-php-ext-install xml xmlrpc xmlwriter xsl 
+
 RUN pecl install imagick
 RUN echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
 RUN docker-php-ext-enable imagick
