@@ -14,8 +14,8 @@ RUN apt-get update && \
 # Some extensions
 RUN apt-get install -y libncurses5 libncurses5-dev libncursesw5 libncursesw5-dev geoip-bin libgeoip-dev libgeoip1 \
     geoip-database geoip-database-extra libxslt1-dev libxslt1.1 libxml2-dev libxml2 libtidy-dev libtidy5 tidy  \
-    sqlite3 libsqlite3-0 libsqlite3-dev sqlite libpspell-dev pdf2htmlex \
-    ssl-cert openssl libcurl3 libssl-dev
+    sqlite3 libsqlite3-0 libsqlite3-dev sqlite libpspell-dev pdf2htmlex wkhtmltopdf xvfb \
+    ssl-cert openssl libcurl3 libssl-dev zip 
     
 
 # ImageMagick

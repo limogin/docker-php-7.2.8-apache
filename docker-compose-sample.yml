@@ -11,6 +11,8 @@ php:
     - mysql
   environment:
     DOCKERENV: dev 
+    APACHE_RUN_USER:   www-data
+    APACHE_RUN_GROUP:  www-data
     SITE:      mydomain.com
     SITE1:     mydomain.com
     SITE2:     myanotherdomain.com

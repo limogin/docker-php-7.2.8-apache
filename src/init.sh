@@ -77,13 +77,19 @@ env | grep MYSQL > /etc/environtment
 
 openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=ES/ST=Spain/L=fpr/O=Dis/CN=fpr"
 
-
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 
+if [ "$APACHE_RUN_USER" ]; then 
 
+ cp /etc/apache2/envvars /etc/apache2/envvars.backup
+ sed -ri -e "s/export APACHE_RUN_USER=www-data/export APACHE_RUN_USER=${APACHE_RUN_USER}/" /etc/apache2/envvars
+ sed -ri -e "s/export APACHE_RUN_GROUP=www-data/export APACHE_RUN_GROUP=${APACHE_RUN_GROUP}/" /etc/apache2/envvars
 
+ adduser --disabled-password --gecos "" ${APACHE_RUN_USER}
+ chown -R ${APACHE_RUN_USER}.${APACHE_RUN_GROUP} /var/www 
 
+fi 
 
